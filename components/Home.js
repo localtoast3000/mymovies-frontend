@@ -14,8 +14,6 @@ function Home() {
     return async () => {
       const res = await fetch('https://mymovies-web-api-xgex.vercel.app/movies');
       const data = await res.json();
-      console.log(res);
-
       setMoviesData(
         data.movies.map(({ title, poster_path, vote_average, vote_count, overview }) => ({
           title,
