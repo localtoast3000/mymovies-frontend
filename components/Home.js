@@ -14,10 +14,11 @@ function Home() {
     return async () => {
       const res = await fetch('https://mymovies-web-api-xgex.vercel.app/movies');
       const data = await res.json();
+      console.log(res);
 
       setMoviesData(
-        data.movies.map(({ original_title, poster_path, vote_average, vote_count, overview }) => ({
-          title: original_title,
+        data.movies.map(({ title, poster_path, vote_average, vote_count, overview }) => ({
+          title,
           poster: `https://image.tmdb.org/t/p/w500/${poster_path}`,
           voteAverage: vote_average,
           voteCount: vote_count,
