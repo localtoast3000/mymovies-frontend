@@ -6,32 +6,9 @@ import Movie from './Movie';
 import 'antd/dist/antd.css';
 import styles from '../styles/Home.module.css';
 
-function Home() {
+function Home({ moviesData }) {
   const [likedMovies, setLikedMovies] = useState([]);
-  const [moviesData, setMoviesData] = useState([]);
 
-  useEffect(() => {
-    return async () => {
-      const res = await fetch('https://mymovies-web-api-xgex.vercel.app/movies');
-      const data = await res.json();
-
-      setMoviesData(
-        data.movies.map(({ title, poster_path, vote_average, vote_count, overview }) => ({
-          title: title,
-          poster: `https://image.tmdb.org/t/p/w500/${poster_path}`,
-          voteAverage: vote_average,
-          voteCount: vote_count,
-          overview: overview,
-        }))
-      );
-    };
-  }, []);
-
-  // useEffect(() => {
-  //   console.log(moviesData);
-  // }, [moviesData]);
-
-  // Liked movies (inverse data flow)
   const updateLikedMovies = (movieTitle) => {
     if (likedMovies.find((movie) => movie === movieTitle)) {
       setLikedMovies(likedMovies.filter((movie) => movie !== movieTitle));
