@@ -1,0 +1,19 @@
+
+👉 The overview is sometimes very long and breaks the visual of your application... Truncate 
+it so that its length does not exceed 250 characters and that it ends with "...". If necessary, 
+adjust the style of your cards.
+
+
+BONUS
+👉 Deploy backend and frontend to Vercel.
+
+
+Deployment is as easy as for classic HTML, NextJS was created by the Vercel team.
+
+
+Reminder: the frontend and backend folders must be extracted from the base setup and deployed 
+separately to GitHub.
+
+
+👉 Then fill in the urls.js file in the backend folder with the links to the two parts deployed 
+to Vercel in order to validate the associated tests.
