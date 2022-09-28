@@ -6,45 +6,30 @@ import Movie from './Movie';
 import 'antd/dist/antd.css';
 import styles from '../styles/Home.module.css';
 
-Home.getDefaultProps = async () => {
-  const res = await fetch('https://mymovies-web-api-xgex.vercel.app/movies');
-  const data = await res.json();
-  console.log(res);
-
-  return data.movies.map(({ title, poster_path, vote_average, vote_count, overview }) => ({
-    title,
-    poster: `https://image.tmdb.org/t/p/w500/${poster_path}`,
-    voteAverage: vote_average,
-    voteCount: vote_count,
-    overview,
-  }));
-};
-
-function Home({ initalMovies }) {
+function Home() {
   const [likedMovies, setLikedMovies] = useState([]);
-  const [moviesData, setMoviesData] = useState([initalMovies]);
+  const [moviesData, setMoviesData] = useState([]);
 
   useEffect(() => {
     return async () => {
       const res = await fetch('https://mymovies-web-api-xgex.vercel.app/movies');
       const data = await res.json();
-      console.log(res);
 
       setMoviesData(
         data.movies.map(({ title, poster_path, vote_average, vote_count, overview }) => ({
-          title,
+          title: title,
           poster: `https://image.tmdb.org/t/p/w500/${poster_path}`,
           voteAverage: vote_average,
           voteCount: vote_count,
-          overview,
+          overview: overview,
         }))
       );
     };
   }, []);
 
-  useEffect(() => {
-    console.log(moviesData);
-  }, [moviesData]);
+  // useEffect(() => {
+  //   console.log(moviesData);
+  // }, [moviesData]);
 
   // Liked movies (inverse data flow)
   const updateLikedMovies = (movieTitle) => {
@@ -66,22 +51,6 @@ function Home({ initalMovies }) {
 
   const popoverContent = <div className={styles.popoverContent}>{likedMoviesPopover}</div>;
 
-  const movies = moviesData.map((data, i) => {
-    const isLiked = likedMovies.some((movie) => movie === data.title);
-    return (
-      <Movie
-        key={i}
-        updateLikedMovies={updateLikedMovies}
-        isLiked={isLiked}
-        title={data.title}
-        overview={data.overview}
-        poster={data.poster}
-        voteAverage={data.voteAverage}
-        voteCount={data.voteCount}
-      />
-    );
-  });
-
   return (
     <div className={styles.main}>
       <div className={styles.header}>
@@ -94,7 +63,20 @@ function Home({ initalMovies }) {
         </Popover>
       </div>
       <div className={styles.title}>LAST RELEASES</div>
-      <div className={styles.moviesContainer}>{movies}</div>
+      <div className={styles.moviesContainer}>
+        {moviesData.map((data, i) => (
+          <Movie
+            key={i}
+            updateLikedMovies={updateLikedMovies}
+            isLiked={likedMovies.some((movie) => movie === data.title)}
+            title={data.title}
+            overview={data.overview}
+            poster={data.poster}
+            voteAverage={data.voteAverage}
+            voteCount={data.voteCount}
+          />
+        ))}
+      </div>
     </div>
   );
 }
