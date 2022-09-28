@@ -9,7 +9,7 @@ import styles from '../styles/Home.module.css';
 function Home() {
   const [likedMovies, setLikedMovies] = useState([]);
   const [moviesData, setMoviesData] = useState([]);
-
+  //
   useEffect(() => {
     return async () => {
       const res = await fetch('https://mymovies-web-api-xgex.vercel.app/movies');
